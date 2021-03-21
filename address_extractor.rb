@@ -1,0 +1,2 @@
+class AddressExtractor
+end
