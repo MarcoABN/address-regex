@@ -1,2 +1,2 @@
-class AddressScaper
+class AddressScraper
 end
