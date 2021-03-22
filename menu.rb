@@ -1,6 +1,5 @@
-require "address_scraper"
-require "httparty"
-
+require_relative "./address_scraper"
+require "net/http"
 class Menu
 	def initialize
 		puts "Como deseja inputar os dados? (0 - Texto bruto, 1 - Arquivo, 2 - URL)"
@@ -18,7 +17,7 @@ class Menu
 					break
                 when "2"
                     puts "Insira a URL do site"
-                    url = gets()
+                    url = URI(gets().chomp())
 					exec(readURL(url))
 					break
 				else
@@ -38,9 +37,11 @@ class Menu
 		return str
 	end
 
-    def readURL(url)
-        response = HTTParty.get(url)
-        return response.body
+    def readURL(uri)
+        response = Net::HTTP.get_response(uri)
+        text = response.body.force_encoding("UTF-8")
+    
+        return text
 	end
 
     def exec(text)

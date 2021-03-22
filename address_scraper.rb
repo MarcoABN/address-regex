@@ -1,7 +1,10 @@
+require_relative "./constants.rb"
+
 class AddressScraper
 	def initialize
-		@addresses = []
- 	   @regex = /(Av(?:enida|\.)?|R(?:ua|\.)?)\s([\p{L}\d\s\(\)\-\/\.]+),\s(\d+\w*)\s([\p{L}\d\s\(\)\-\/\.]+\s)?-\s([\p{L}\d\s\(\)\-\/\.]+),\s([\p{L}\s]+)-\s(\w{2}),\s(\d{5}-?\d{3})/i
+        @addresses = []
+		@regex = /#{TYPE} #{STREET_NAME}, #{NUMBER} #{COMPLEMENT}\s?- #{NEIGHBORHOOD}, #{CITY} - #{STATE}, #{ZIP_CODE}/i
+		# Av. Eng. Eusébio Stevaux, 823 - Santo Amaro, São Paulo - SP, 04696-000
 	end
 
     def scrap(text)
@@ -17,19 +20,10 @@ class AddressScraper
 			puts "Número: #{address[2]}"
 			puts "Complemento: #{(!address[3] ? 'N/A': address[3])}"
 			puts "Bairro: #{address[4]}"
-			puts "Cidade: #{address[5]}"
-			puts "Estado: #{address[6]}"
-			puts "CEP: #{address[7]}"
+			puts "Cidade: #{(!address[5] ? 'N/D': address[5])}"
+			puts "Estado: #{(!address[6] ? 'N/D': address[6])}"
+			puts "CEP: #{(!address[7] ? 'N/D': address[7])}"
 			puts '------------'
         end
     end
 end
-
-# Tipo: 
-# Nome
-# número
-# complemento
-# bairro
-# cidade
-# estado
-# cep

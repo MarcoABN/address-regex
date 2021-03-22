@@ -1,3 +1,3 @@
-load "menu"
+require_relative "./menu"
 
 Menu.new
