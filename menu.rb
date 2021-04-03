@@ -2,7 +2,7 @@ require_relative "./address_scraper"
 require "net/http"
 class Menu
 	def initialize
-		puts "Como deseja inputar os dados? (0 - Texto bruto, 1 - Arquivo, 2 - URL)"
+		puts "Como deseja inputar os dados? (0 - Texto bruto, 1 - Arquivo)"
 		while true
 			option = gets.chomp()
 			case option
@@ -14,11 +14,6 @@ class Menu
 					puts "Insira o path do arquivo:"
 					path = gets.chomp()
 					exec(readFile(path))
-					break
-                when "2"
-                    puts "Insira a URL do site"
-                    url = URI(gets().chomp())
-					exec(readURL(url))
 					break
 				else
 					puts "Input inválido"
@@ -35,13 +30,6 @@ class Menu
 			str << line
 		end
 		return str
-	end
-
-    def readURL(uri)
-        response = Net::HTTP.get_response(uri)
-        text = response.body.force_encoding("UTF-8")
-    
-        return text
 	end
 
     def exec(text)

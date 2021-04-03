@@ -3,8 +3,7 @@ require_relative "./constants.rb"
 class AddressScraper
 	def initialize
         @addresses = []
-		@regex = /#{TYPE} #{STREET_NAME}, #{NUMBER} #{COMPLEMENT}\s?- #{NEIGHBORHOOD}, #{CITY} - #{STATE}, #{ZIP_CODE}/i
-		# Av. Eng. Eusébio Stevaux, 823 - Santo Amaro, São Paulo - SP, 04696-000
+		@regex = /#{TYPE} #{STREET_NAME}#{SEPARATORS}#{NUMBER} ?#{COMPLEMENT}#{SEPARATORS}#{NEIGHBORHOOD}#{SEPARATORS}#{CITY}#{SEPARATORS}#{STATE}#{SEPARATORS}?#{ZIP_CODE}/i
 	end
 
     def scrap(text)
@@ -17,12 +16,12 @@ class AddressScraper
             puts "Endereço #{index + 1}"
             puts "Tipo: #{address[0]}"
 			puts "Nome: #{address[1]}"
-			puts "Número: #{address[2]}"
+			puts "Número: #{address[2].sub(/[nN][°º] ?/, '')}"
 			puts "Complemento: #{(!address[3] ? 'N/A': address[3])}"
-			puts "Bairro: #{address[4]}"
-			puts "Cidade: #{(!address[5] ? 'N/D': address[5])}"
-			puts "Estado: #{(!address[6] ? 'N/D': address[6])}"
-			puts "CEP: #{(!address[7] ? 'N/D': address[7])}"
+			puts "Bairro: #{(!address[4] ? 'N/D': address[4])}"
+			puts "Cidade: #{address[5]}"
+			puts "Estado: #{address[6]}"
+			puts "CEP: #{address[7].sub(/(CEP|cep|Cep) ?/, '')}"
 			puts '------------'
         end
     end
